@@ -1,0 +1,393 @@
+/**
+ * PROD-SYS — Estilos del Sistema de Autenticación
+ * Pantalla de login con diseño premium, animaciones suaves y paleta coherente.
+ */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   OVERLAY: fondo que cubre toda la pantalla
+───────────────────────────────────────────────────────────────────────────── */
+#login-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    transition: opacity 0.4s ease;
+    opacity: 1;
+    padding: 1rem;
+}
+
+#login-overlay.auth-overlay--hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Patrón de puntos decorativo en el fondo */
+#login-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(79, 70, 229, 0.15) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   CARD: tarjeta principal del login
+───────────────────────────────────────────────────────────────────────────── */
+#auth-card {
+    position: relative;
+    background: #ffffff;
+    border-radius: 1.25rem;
+    padding: 2.25rem 2rem 1.75rem;
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    animation: authCardEntrance 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes authCardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Animación de error (shake) */
+@keyframes authShake {
+    0%, 100% { transform: translateX(0); }
+    15%       { transform: translateX(-8px); }
+    30%       { transform: translateX(8px); }
+    45%       { transform: translateX(-6px); }
+    60%       { transform: translateX(6px); }
+    75%       { transform: translateX(-3px); }
+    90%       { transform: translateX(3px); }
+}
+
+#auth-card.auth-shake {
+    animation: authShake 0.5s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ENCABEZADO: logo + título
+───────────────────────────────────────────────────────────────────────────── */
+.auth-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.auth-logo-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    border-radius: 14px;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+}
+
+.auth-logo-wrap svg {
+    width: 26px;
+    height: 26px;
+    color: white;
+    stroke: white;
+}
+
+.auth-brand-name {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #0f172a;
+    text-transform: uppercase;
+    display: block;
+    line-height: 1.2;
+}
+
+.auth-brand-sub {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    color: #64748b;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 0.15rem;
+}
+
+.auth-title {
+    margin-top: 0.75rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.auth-subtitle {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FORMULARIO: inputs y labels
+───────────────────────────────────────────────────────────────────────────── */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.auth-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.auth-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #64748b;
+}
+
+.auth-input {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.65rem 0.875rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.625rem;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    color: #0f172a;
+    background-color: #f8fafc;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.auth-input:focus {
+    border-color: #4f46e5;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.auth-input--error {
+    border-color: #ef4444 !important;
+    background-color: #fff5f5 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12) !important;
+}
+
+/* Campo de clave con botón ojo */
+.auth-clave-wrap {
+    position: relative;
+}
+
+.auth-clave-wrap .auth-input {
+    padding-right: 2.75rem;
+}
+
+.auth-ojo-btn {
+    position: absolute;
+    right: 0.625rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.35rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    border-radius: 0.375rem;
+    touch-action: manipulation;
+}
+
+.auth-ojo-btn:hover {
+    color: #4f46e5;
+}
+
+.auth-ojo-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   MENSAJE DE ERROR
+───────────────────────────────────────────────────────────────────────────── */
+#auth-error {
+    font-size: 0.8rem;
+    color: #dc2626;
+    font-weight: 600;
+    text-align: center;
+    min-height: 1.1rem;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    padding: 0 0.5rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BOTÓN ENTRAR
+───────────────────────────────────────────────────────────────────────────── */
+.auth-btn-entrar {
+    width: 100%;
+    min-height: 46px;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    color: white;
+    border: none;
+    border-radius: 0.625rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.45);
+    font-family: 'Inter', sans-serif;
+    margin-top: 0.25rem;
+    touch-action: manipulation;
+}
+
+.auth-btn-entrar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.5);
+}
+
+.auth-btn-entrar:active {
+    transform: translateY(0);
+    opacity: 0.9;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PIE DEL CARD
+───────────────────────────────────────────────────────────────────────────── */
+.auth-footer {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+    text-align: center;
+}
+
+.auth-footer-text {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PERFIL DE USUARIO EN LA BARRA LATERAL
+───────────────────────────────────────────────────────────────────────────── */
+#auth-user-profile {
+    display: none;
+    margin-top: auto;
+    padding: 0 0.25rem;
+}
+
+.auth-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.65rem 0.75rem;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 0.75rem;
+    border: 1px solid var(--sc8-border);
+    box-shadow: var(--sc8-shadow-sm);
+}
+
+.auth-avatar {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 0.5rem;
+    background: linear-gradient(135deg, var(--sc8-primary), var(--sc8-primary-dark));
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.auth-profile-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.auth-profile-name {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--sc8-primary-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.auth-profile-role {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--sc8-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.auth-logout-btn {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--sc8-text-muted);
+    padding: 0.35rem;
+    border-radius: 0.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    touch-action: manipulation;
+}
+
+.auth-logout-btn:hover {
+    color: var(--sc8-danger);
+    background-color: rgba(182, 91, 91, 0.12);
+}
+
+.auth-logout-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   RESPONSIVE: ajustes según viewport
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    #auth-user-profile {
+        display: none !important;
+    }
+
+    #login-overlay {
+        padding: 1rem;
+    }
+}
